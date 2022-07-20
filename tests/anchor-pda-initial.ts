@@ -6,6 +6,7 @@ const { SystemProgram } = anchor.web3;
 describe("anchor-pda-initial", () => {
   // Configure the client to use the local cluster.
   //anchor.setProvider(anchor.AnchorProvider.env());
+  //const provider = anchor.AnchorProvider.env();
   const provider = anchor.AnchorProvider.local();
   anchor.setProvider(provider);
 
@@ -31,5 +32,16 @@ describe("anchor-pda-initial", () => {
       signers : [someOtherKeyPair]
     });
     //console.log("Your transaction signature", tx);
+  });
+  it("Can vote!", async () => {
+    // Add your test here.
+    await program.rpc.voteLikeDislike(true, {
+      accounts: {
+        voter: voterAccount,
+        authority: voterAccount,
+        systemProgram: SystemProgram.programId,
+      },
+      signers : [someOtherKeyPair]
+    });
   });
 });
